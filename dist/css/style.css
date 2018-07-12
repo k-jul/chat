@@ -3,23 +3,30 @@
      -moz-box-sizing: border-box;
           box-sizing: border-box; }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, p {
   margin: 0; }
+
+input[type="text"], input[type="email"] {
+  outline: none;
+  padding: 5px; }
 
 body {
-  padding: 0 20px;
-  margin: 0; }
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif;
+  color: #272727; }
 
 .wrapper {
-  padding: 20px;
+  padding: 0 20px;
   position: relative;
-  background-color: lightblue;
+  background-color: #c6dce4;
   height: 100vh;
   border: 1px solid black;
   display: grid;
+  grid-gap: 10px;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(5, 1fr);
-  grid-template-areas: "hd hd hd hd" "mn mn mn as" "mn mn mn as" "mn mn mn as" "ft ft ft ft"; }
+  grid-template-areas: "hd hd hd hd" "mn mn mn as" "mn mn mn as" "mn mn mn as" "in in in bt"; }
 
 #cover {
   position: absolute;
@@ -27,12 +34,14 @@ body {
   left: 0;
   width: 100%;
   height: 100vh;
-  border: 1px solid black;
-  background-color: rgba(211, 211, 211, 0.527);
+  background-color: white;
   z-index: 5; }
 
 .form {
-  width: 300px;
+  background-color: rgba(211, 211, 211, 0.719);
+  -webkit-box-shadow: 0px 0px 5px #afafaf;
+          box-shadow: 0px 0px 5px #afafaf;
+  width: 400px;
   height: 300px;
   padding: 20px;
   margin: auto;
@@ -40,7 +49,6 @@ body {
      -moz-transform: translateY(50%);
       -ms-transform: translateY(50%);
           transform: translateY(50%);
-  border: 1px solid red;
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
@@ -63,6 +71,9 @@ body {
      -moz-box-align: center;
       -ms-flex-align: center;
           align-items: center; }
+
+.log-in, .registration {
+  width: 80%; }
 
 .log-in, .registration {
   display: -webkit-box;
@@ -94,17 +105,26 @@ body {
   -webkit-align-items: center;
      -moz-box-align: center;
       -ms-flex-align: center;
-          align-items: center; }
+          align-items: center;
+  padding-left: 20px; }
   .header-right {
     width: 25%; }
 
-.main {
+#main {
   padding: 20px;
   grid-area: mn;
-  border: 1px solid black; }
+  background-color: #fff;
+  border: 1px solid white;
+  -webkit-box-shadow: 0px 0px 5px #afafaf;
+          box-shadow: 0px 0px 5px #afafaf; }
 
 .message {
-  border: 1px solid black; }
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  background-color: rgba(211, 211, 211, 0.719);
+  -webkit-box-shadow: 0px 0px 5px #afafaf;
+          box-shadow: 0px 0px 5px #afafaf; }
   .message-info {
     display: -webkit-box;
     display: -webkit-flex;
@@ -115,12 +135,25 @@ body {
     -webkit-justify-content: space-between;
        -moz-box-pack: justify;
         -ms-flex-pack: justify;
-            justify-content: space-between; }
+            justify-content: space-between;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 20px; }
+  .message-content {
+    font-size: 16px; }
 
 #aside {
   padding: 20px;
   grid-area: as;
-  border: 1px solid black; }
+  background-color: #fff;
+  border: 1px solid white;
+  -webkit-box-shadow: 0px 0px 5px #afafaf;
+          box-shadow: 0px 0px 5px #afafaf;
+  font-weight: bold; }
+
+.user-status {
+  color: green;
+  font-weight: normal; }
 
 .footer {
   grid-area: ft;
@@ -141,12 +174,38 @@ body {
           align-items: center; }
 
 #input-field {
+  grid-area: in;
   height: 50px;
-  width: 75%; }
+  border: 1px solid white;
+  -webkit-box-shadow: 0px 0px 5px #afafaf;
+          box-shadow: 0px 0px 5px #afafaf;
+  -webkit-align-self: center;
+      -ms-flex-item-align: center;
+          align-self: center; }
 
 .btn {
+  outline: none;
+  border: none;
   width: 100%;
-  height: 50px; }
+  height: 50px;
+  -webkit-box-shadow: 0px 0px 5px #afafaf;
+          box-shadow: 0px 0px 5px #afafaf;
+  background-color: #9BAFC2;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: bold;
+  -webkit-transition: color 0.3 ease-in-out;
+  -moz-transition: color 0.3 ease-in-out;
+  transition: color 0.3 ease-in-out; }
+  .btn:hover {
+    color: white; }
 
 #btn-send {
-  width: 25%; }
+  grid-area: bt;
+  background-color: rgba(36, 120, 165, 0.7);
+  -webkit-align-self: center;
+      -ms-flex-item-align: center;
+          align-self: center; }
+
+#btn-logout {
+  background-color: rgba(255, 143, 32, 0.7); }
