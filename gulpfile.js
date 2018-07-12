@@ -10,7 +10,7 @@ const autoprefixBrowsers = ['> 1%', 'last 2 versions', 'firefox >= 4', 'safari 7
 
 gulp.task('server', ['sass'], function() {
     browserSync.init({
-        server: "./dist/html"
+        server: "./dist"
     });
     gulp.watch(["./src/scss/*.scss", "./src/scss/**/*.scss"], ['sass']);
     gulp.watch('./src/img/*', ['img']);
@@ -21,7 +21,7 @@ gulp.task('server', ['sass'], function() {
 gulp.task('pug', function() {
     return gulp.src('./src/pug/*.pug')
         .pipe(pug())
-        .pipe(gulp.dest('./dist/html/'));
+        .pipe(gulp.dest('./dist/'));
 });
 
 gulp.task('sass', function() {

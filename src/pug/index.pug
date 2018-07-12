@@ -5,24 +5,35 @@ html(lang="en")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         meta(http-equiv="X-UA-Compatible", content="ie=edge")
         title Chat
-        link(href="../css/style.css", rel='stylesheet', type="text/css")
+        link(href="css/style.css", rel='stylesheet', type="text/css")
     body
         .wrapper
+            div#cover
+                .form
+                    form.log-in
+                        input#input-login(type="text", placeholder="username", required)
+                        button.btn#btn-login Log-in
+                    form.registration
+                        input#input-reg-name(type="text", placeholder="username", required)
+                        input#input-reg-email(type="email", placeholder="email", required)
+                        button.btn#btn-registration Register
             header.header
-                h1 Chat name
+                h1.chat-name Chat name
                 .header-right
-                    h3.user-name name
+                    h3#user-name name
                     button.btn.btn-logout Log out
             main.main
                 .message
                     .message-info
-                        span author
-                        span date
-                    p.message-content
-            aside.aside
+                        .author author
+                        .date date
+                    p.message-content content
+            aside#aside
                 p user
                 p user
             footer.footer
-                input(type="text")
-                button.btn.btn-send Send
+                input#input-field(type="text")
+                button.btn#btn-send Send
+        script(src="js/script.js")
+
         
