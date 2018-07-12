@@ -15,7 +15,7 @@ gulp.task('server', ['sass'], function() {
     gulp.watch(["./src/scss/*.scss", "./src/scss/**/*.scss"], ['sass']);
     gulp.watch('./src/img/*', ['img']);
     gulp.watch('./src/js/*.js', ['js'])
-    gulp.watch("./src/pug/*.pug").on('change', browserSync.reload);
+    gulp.watch("./src/pug/*.pug", ['pug']).on('change', browserSync.reload);
 });
 
 gulp.task('pug', function() {
