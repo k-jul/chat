@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible", content="ie=edge")
+        title Chat
+        link(rel="stylesheet", href="https://use.fontawesome.com/releases/v5.0.12/css/all.css", integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9",
+        crossorigin="anonymous")
+        link(href="css/style.css", rel='stylesheet', type="text/css")
+    body
+        .wrapper
+            #cover
+                .form
+                    input#input-name(type="text", placeholder="User Name", required)
+                    input#input-nickname(type="text", placeholder="User Nickname", required)
+                    button.btn#btn-login Log in
+            header.header
+                h1.chat-name My awesome chat
+                .header-right
+                    h3#user-name 
+                    button.btn#btn-logout Log out
+            main#main
+            aside#aside
+            input#input-message(type="text")
+            button.btn#btn-send Send
+        script(src="js/script.js")
+
+        

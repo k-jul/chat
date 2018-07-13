@@ -1,0 +1,179 @@
+* {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box; }
+
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0; }
+
+input[type="text"] {
+  outline: none;
+  padding: 5px;
+  width: 100%; }
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif;
+  color: #272727; }
+
+.wrapper {
+  padding: 0 20px;
+  position: relative;
+  background-color: #c6dce4;
+  height: 100vh;
+  border: 1px solid black;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-template-areas: "hd hd hd hd" "mn mn mn as" "mn mn mn as" "mn mn mn as" "in in in bt"; }
+
+#cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: white;
+  z-index: 5; }
+
+.form {
+  background-color: rgba(211, 211, 211, 0.719);
+  -webkit-box-shadow: 0px 0px 5px #afafaf;
+          box-shadow: 0px 0px 5px #afafaf;
+  width: 400px;
+  height: 300px;
+  padding: 70px 40px;
+  margin: auto;
+  -webkit-transform: translateY(50%);
+     -moz-transform: translateY(50%);
+      -ms-transform: translateY(50%);
+          transform: translateY(50%);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+     -moz-box-orient: vertical;
+     -moz-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+     -moz-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+     -moz-box-align: center;
+      -ms-flex-align: center;
+          align-items: center; }
+
+.header {
+  grid-area: hd;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+     -moz-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+     -moz-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-left: 20px; }
+  .header-right {
+    width: 25%; }
+
+#main {
+  padding: 20px;
+  grid-area: mn;
+  background-color: #fff;
+  border: 1px solid white;
+  -webkit-box-shadow: 0px 0px 5px #afafaf;
+          box-shadow: 0px 0px 5px #afafaf; }
+
+.message {
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  background-color: rgba(211, 211, 211, 0.719);
+  -webkit-box-shadow: 0px 0px 5px #afafaf;
+          box-shadow: 0px 0px 5px #afafaf; }
+  .message-info {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+       -moz-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #2478a5;
+    font-style: italic; }
+  .message-content {
+    font-size: 16px; }
+
+#aside {
+  padding: 20px;
+  grid-area: as;
+  background-color: #fff;
+  border: 1px solid white;
+  -webkit-box-shadow: 0px 0px 5px #afafaf;
+          box-shadow: 0px 0px 5px #afafaf;
+  font-weight: bold; }
+
+.user-status {
+  color: green;
+  font-weight: normal; }
+
+#input-message {
+  grid-area: in;
+  height: 50px;
+  border: 1px solid white;
+  -webkit-box-shadow: 0px 0px 5px #afafaf;
+          box-shadow: 0px 0px 5px #afafaf;
+  -webkit-align-self: center;
+      -ms-flex-item-align: center;
+          align-self: center; }
+
+.btn {
+  outline: none;
+  border: none;
+  width: 100%;
+  height: 50px;
+  -webkit-box-shadow: 0px 0px 5px #afafaf;
+          box-shadow: 0px 0px 5px #afafaf;
+  background-color: #9BAFC2;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: bold;
+  -webkit-transition: color 0.3 ease-in-out;
+  -moz-transition: color 0.3 ease-in-out;
+  transition: color 0.3 ease-in-out; }
+  .btn:hover {
+    color: white; }
+
+#btn-send {
+  grid-area: bt;
+  background-color: rgba(36, 120, 165, 0.7);
+  -webkit-align-self: center;
+      -ms-flex-item-align: center;
+          align-self: center; }
+
+#btn-logout {
+  background-color: rgba(255, 143, 32, 0.7); }
