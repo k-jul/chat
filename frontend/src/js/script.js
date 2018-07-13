@@ -32,12 +32,16 @@ class User {
 }
 
 class Message {
-    constructor(senderId, receiverId = '5b48e17ebce6e02ca6ef27fc', sendingTime, body) {
+    constructor(senderId, receiverId, sendingTime, body) {
         this.senderId = senderId;
         this.receiverId = receiverId;
         this.sendingTime = sendingTime;
         this.body = body;
     }
+}
+
+function getUserById (id) {
+    return registeredUsers.filter(user => user['_id'] == id)
 }
 
 
@@ -81,11 +85,12 @@ function renderMessages (messages) {
 
         message.innerHTML = `<div class ="message-info">
 <div class ="author">${element.senderId.name} <i>${element.senderId.nickname}</i></div>
-<div class ="date">${(element.sendingTime)}</div>
+<div class ="date">${moment(element.sendingTime).format('Mo MMMM YYYY hh:mm:ss')}</div>
 </div>
 <p class = "message-content">${element.body}</p>`
 
         messageContainer.appendChild(message);
+        messageContainer.scrollTop = messageContainer.scrollHeight
     });
 
 }
@@ -95,10 +100,11 @@ function getAllMessages() {
     fetch(backendUrl + "messages/")
         .then(response => response.json())
         .then(data => {
+            if (data.length) {
             messageContainer.innerHTML = '';
             lastMsgDate = data[data.length-1].sendingTime;
             renderMessages(data);
-            
+            } else return;            
         })
 
 }
@@ -115,6 +121,8 @@ function createMessage(data) {
         })
         .then(response => response.json())
         .then(msg => {
+            msg.senderId = currentUser;
+            msg.receiverId = getUserById(msg.receiverId);
             renderMessages([msg]);
             lastMsgDate = msg.sendingTime;
         });
@@ -164,26 +172,31 @@ btnLogIn.addEventListener('click', function (e) {
 
 inputMessage.addEventListener('change', function (e) {
     currentMessageText = e.target.value;
-    console.log(registeredUsers);
+
+});
+
+inputMessage.addEventListener('keyup', function (e) {
+    if (e.keyCode === 13) {
+
+    let timeWhenSent = new Date();
+    let message = new Message(currentUser['_id'], receiverId = '5b48e17ebce6e02ca6ef27fc', timeWhenSent, currentMessageText);
+    createMessage(message);
+
+    inputMessage.value = '';
+
+    }
 
 });
 
 btnSendMessage.addEventListener('click', function () {
 
     let timeWhenSent = new Date();
+    let message = new Message(currentUser['_id'], receiverId = '5b48e17ebce6e02ca6ef27fc', timeWhenSent, currentMessageText);
+    createMessage(message);
 
-    fetch(backendUrl + "users/" + currentUserNickname)
-        .then(response => response.json())
-        .then(data => {
-            currentUser = data[0];
-
-            let message = new Message(currentUser['_id'], receiverId = '', timeWhenSent, currentMessageText);
-            createMessage(message);
-
-            inputMessage.value = '';
-        });
+    inputMessage.value = '';
         
-        getAllMessages();
+    //getNewMessages (lastMsgDate);
 
 });
 
