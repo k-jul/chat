@@ -6,17 +6,24 @@ const messageSchema = new Schema ({
 
     senderId: {
         type: ObjectId,
-        ref: 'User',
+        ref: 'users',
         required: true
     },
     receiverId: {
         type: ObjectId,
-        ref: 'User',
+        ref: 'users',
         required: true
     },
+    sendingTime: {
+        type: Date,
+        default: Date.now,
+
+    },
+
     body: {
         type: String
     }
-})
+},
+ {versionKey:false});
 
 module.exports = mongoose.model('messages', messageSchema);

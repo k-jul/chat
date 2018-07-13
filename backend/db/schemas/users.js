@@ -13,6 +13,7 @@ const userSchema = new Schema ({
     status: {
         type: String
     }
-})
+},
+{versionKey:false})
 
 module.exports = mongoose.model('users', userSchema);

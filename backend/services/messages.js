@@ -5,6 +5,10 @@ function getAll () {
     return Message.getAll();
 };
 
+function getNewMessages(lastMsgDate){
+    return Message.getNew(lastMsgDate);
+}
+
 function getMessageById (id) {
     return Message.getById(id);
 };
@@ -26,5 +30,6 @@ module.exports = {
     getMessageById,
     createMessage,
     updateMessage,
-    deleteMessage
+    deleteMessage,
+    getNewMessages
 }

@@ -20,15 +20,6 @@ router.get('/:nickname', (req, res) => {
         })
 });
 
-router.get('/:id/friends', (req, res) => {
-    return service.getFriendsByUserId(req.params.id)
-        .then((data) => res.status(200).send(data))
-        .catch((err) => {
-            console.log(err);
-            res.sendStatus(400);
-        })
-});
-
 router.post('/', (req, res) => {
     return service.createNewUser(req.body)
         .then((data) => res.status(201).send(data))
