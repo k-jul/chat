@@ -10,13 +10,13 @@ class MessageRepository extends Repository {
     return this.model.find()
     .sort({'sendingTime': 1})
     .limit(100)
-    .populate('senderId')
-    .populate('receiverId');
+    .populate('sender')
    }
 
    getNew(lastMsgDate) {
        return this.model.find({'sendingTime': {$gt: lastMsgDate}})
        .sort({'sendingTime': 1})
+       .populate('sender')
    }
 
 }

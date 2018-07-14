@@ -1,6 +1,6 @@
+
 const btnLogIn = document.getElementById('btn-login');
 const btnSendMessage = document.getElementById('btn-send');
-const btnLogOut = document.getElementById('btn-logout');
 
 const inputName = document.getElementById('input-name');
 const inputNickname = document.getElementById('input-nickname');
@@ -32,18 +32,12 @@ class User {
 }
 
 class Message {
-    constructor(senderId, receiverId, sendingTime, body) {
-        this.senderId = senderId;
-        this.receiverId = receiverId;
+    constructor(senderId, sendingTime, body) {
+        this.sender = senderId;
         this.sendingTime = sendingTime;
         this.body = body;
     }
 }
-
-function getUserById (id) {
-    return registeredUsers.filter(user => user['_id'] == id)
-}
-
 
 function createUser(data) {
     return fetch(backendUrl + "users/", {
@@ -76,21 +70,40 @@ function renderUserList() {
         })
 };
 
+function checkAndTrim100Msg (){
+
+    let renderedMessages = messageContainer.children;
+
+    if (renderedMessages.length >=100) {
+        let exceeding = renderedMessages.length - 100;
+        for (let i = 0; i < exceeding; i++) {
+            messageContainer.removeChild(renderedMessages[0]);
+        }
+    }
+}
+
 function renderMessages (messages) {
 
     messages.forEach(element => {
+
 
         let message = document.createElement('div');
         message.classList.add('message');
 
         message.innerHTML = `<div class ="message-info">
-<div class ="author">${element.senderId.name} <i>${element.senderId.nickname}</i></div>
+<div class ="author">${element.sender.name} <i>${element.sender.nickname}</i></div>
 <div class ="date">${moment(element.sendingTime).format('Mo MMMM YYYY hh:mm:ss')}</div>
 </div>
 <p class = "message-content">${element.body}</p>`
 
         messageContainer.appendChild(message);
-        messageContainer.scrollTop = messageContainer.scrollHeight
+
+        if(new RegExp(`.*${currentUserNickname}.*`).test(element.body)) message.style.background="#aade8c";
+
+        checkAndTrim100Msg();
+        messageContainer.scrollTop = messageContainer.scrollHeight;
+
+
     });
 
 }
@@ -102,7 +115,7 @@ function getAllMessages() {
         .then(data => {
             if (data.length) {
             messageContainer.innerHTML = '';
-            lastMsgDate = data[data.length-1].sendingTime;
+            lastMsgDate = moment(data[data.length-1].sendingTime);
             renderMessages(data);
             } else return;            
         })
@@ -121,18 +134,22 @@ function createMessage(data) {
         })
         .then(response => response.json())
         .then(msg => {
-            msg.senderId = currentUser;
-            msg.receiverId = getUserById(msg.receiverId);
-            renderMessages([msg]);
-            lastMsgDate = msg.sendingTime;
+            getNewMessages();
+        
         });
 };
 
-function getNewMessages (lastMsgDate) {
-     fetch(backendUrl + "messages?lasMsgDate=" + lastMsgDate)
+function getNewMessages () {
+
+    if (!lastMsgDate) lastMsgDate = moment().subtract(1, 'hours');
+
+    return fetch(backendUrl + "messages/getNewMessages?lastMsgDate=" + lastMsgDate)
     .then(response => response.json())
     .then(data => {
+        if (data.length) {
+        lastMsgDate = moment(data[data.length-1].sendingTime);
         renderMessages(data);
+        } else return;
     })
 }
 
@@ -178,8 +195,7 @@ inputMessage.addEventListener('change', function (e) {
 inputMessage.addEventListener('keyup', function (e) {
     if (e.keyCode === 13) {
 
-    let timeWhenSent = new Date();
-    let message = new Message(currentUser['_id'], receiverId = '5b48e17ebce6e02ca6ef27fc', timeWhenSent, currentMessageText);
+    let message = new Message(currentUser['_id'], new Date (), currentMessageText);
     createMessage(message);
 
     inputMessage.value = '';
@@ -190,8 +206,7 @@ inputMessage.addEventListener('keyup', function (e) {
 
 btnSendMessage.addEventListener('click', function () {
 
-    let timeWhenSent = new Date();
-    let message = new Message(currentUser['_id'], receiverId = '5b48e17ebce6e02ca6ef27fc', timeWhenSent, currentMessageText);
+    let message = new Message(currentUser['_id'], new Date(), currentMessageText);
     createMessage(message);
 
     inputMessage.value = '';
@@ -200,6 +215,4 @@ btnSendMessage.addEventListener('click', function () {
 
 });
 
-btnLogOut.addEventListener('click', function (e) {
-    modal.style.display = 'block';
-});
+setInterval(getNewMessages, 1000);

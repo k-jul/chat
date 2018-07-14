@@ -69,10 +69,6 @@ body {
     align-items:center;
     padding-left: 20px;
 
-    &-right {
-        width: 25%;
-    }
-
 }
 
 #main {
@@ -116,11 +112,6 @@ body {
     font-weight: bold;
 }
 
-.user-status {
-    color: green;
-    font-weight: normal;
-}
-
 #input-message {
     grid-area: in;
     height: 50px;
@@ -150,8 +141,4 @@ body {
     grid-area: bt;
     background-color: rgba(36, 120, 165, 0.7);
     align-self: center;
-}
-
-#btn-logout {
-    background-color: rgba(255, 143, 32, 0.7);
 }

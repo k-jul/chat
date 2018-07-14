@@ -4,12 +4,7 @@ const ObjectId = Schema.Types.ObjectId;
 
 const messageSchema = new Schema ({
 
-    senderId: {
-        type: ObjectId,
-        ref: 'users',
-        required: true
-    },
-    receiverId: {
+    sender: {
         type: ObjectId,
         ref: 'users',
         required: true
@@ -17,7 +12,6 @@ const messageSchema = new Schema ({
     sendingTime: {
         type: Date,
         default: Date.now,
-
     },
 
     body: {

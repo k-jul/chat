@@ -2,7 +2,6 @@ const router = require('express').Router();
 const service = require('../services/messages');
 
 router.get('/', (req, res, next) => {
-    if(req.query.lastMsgDate) next();
     return service.getAll()
         .then((data) => res.status(200).send(data))
         .catch((err) => {
@@ -11,9 +10,11 @@ router.get('/', (req, res, next) => {
         })
 });
 
-router.get('/', (req, res) => {
+router.get('/getNewMessages', (req, res) => {
     return service.getNewMessages(req.query.lastMsgDate)
-        .then((data) => res.status(200).send(data))
+        .then((data) => {
+            return res.status(200).send(data)
+        })
         .catch((err) => {
             console.log(err);
             res.sendStatus(400);
