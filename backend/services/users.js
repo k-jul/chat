@@ -13,18 +13,10 @@ function createNewUser (data) {
     return User.create(data);
 };
 
-function updateUserInfo (id, data) {
-    return User.update(id, data);
-};
-
-function deleteUser (id) {
-    return User.delete(id);
-};
 
 module.exports = {
     getAll,
     getUserByNickname,
-    createNewUser,
-    updateUserInfo,
-    deleteUser
+    createNewUser
+    
 }

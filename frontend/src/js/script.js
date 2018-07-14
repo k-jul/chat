@@ -52,7 +52,6 @@ function createUser(data) {
         .then(data => {
             currentUser = data;
             loggedinUserName.innerHTML = `<i class="fas fa-user-alt"></i> ${currentUser.name}`;
-            userList.innerHTML += `<li> ${currentUser.name} (${currentUser.nickname}) </li>`;
         });
 };
 
@@ -65,7 +64,7 @@ function renderUserList() {
             userList.innerHTML = '';
             data.forEach(element => {
                 registeredUsers.push(element);
-                userList.innerHTML += element.nickname !== "@general" ? `<li> ${element.name} (${element.nickname}) </li>` : '';
+                userList.innerHTML += element.nickname !== "@general" ? `<li> ${element.name} (<span class = "nickname">${element.nickname}<span>) </li>` : '';
             });
         })
 };
@@ -99,7 +98,7 @@ function renderMessages (messages) {
         messageContainer.appendChild(message);
 
         if(new RegExp(`.*${currentUserNickname}.*`).test(element.body)) message.style.background="#aade8c";
-
+            
         checkAndTrim100Msg();
         messageContainer.scrollTop = messageContainer.scrollHeight;
 
@@ -214,5 +213,8 @@ btnSendMessage.addEventListener('click', function () {
     //getNewMessages (lastMsgDate);
 
 });
+
+
+setInterval(renderUserList, 5000);
 
 setInterval(getNewMessages, 1000);
