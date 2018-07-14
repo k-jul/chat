@@ -10,6 +10,10 @@ class Repository {
     create(data) {
         return new this.model(data).save();
     }
+
+    update(id, body) {
+        return this.model.findByIdAndUpdate(id, body, {new:true});
+    }
 }
 
 

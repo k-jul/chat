@@ -11,6 +11,7 @@ const userList = document.getElementById('user-list');
 const loggedinUserName = document.getElementById('user-name');
 const modal = document.getElementById('cover');
 const messageContainer = document.getElementById('main');
+const typingStatus = document.getElementById('typing-status');
 
 let registeredUsers = [];
 let lastMsgDate;
@@ -81,18 +82,23 @@ function renderUserList(data) {
     userList.innerHTML = '';
     data.forEach(element => {
     if (!registeredUsers.length) registeredUsers.push(element);
-    userList.innerHTML += `<li> ${element.name} (<span class = "nickname">${element.nickname}<span>) </li>`;
+    userList.innerHTML += `<li id=${element._id}> ${element.name} (<span class = "nickname">${element.nickname}<span>) <sup class=${element.status}>${element.status}<sup> </li>`;
     });
 };
 
-function renderAlertMsg (user, alert) {
+function updateUserStatus (user) {
+    let userToUpdate = document.getElementById(user._id);
+    userToUpdate.innerHTML = `${user.name} (<span class = "nickname">${user.nickname}<span>) <sup class=${user.status}>${user.status}<sup>`
 
-    console.dir(messageContainer);
+}
+
+function renderAlertMsg (user, alert) {
 
     let message = document.createElement('div');
     message.classList.add('message');
+    message.classList.add('message-alert');
 
-    message.innerHTML = ` <div class ="message-info">${moment().format('Mo MMMM YYYY hh:mm:ss')}</div>
+    message.innerHTML = ` <div class ="message-info alert">${moment().format('Mo MMMM YYYY hh:mm:ss')}</div>
 <p class = "message-content"><b>${user.name} <i> ${user.nickname}</i></b> ${alert} </p>`
 
     messageContainer.appendChild(message);
@@ -142,6 +148,14 @@ socket.on('get:initial:users:success', users => {
     renderUserList(users);
 });
 
+inputMessage.addEventListener('focus', function (e) {
+   socket.emit('user:typing', currentUser);
+});
+
+inputMessage.addEventListener('blur', function (e) {
+    socket.emit('user:stopped:typing', currentUser);
+ })
+
 inputMessage.addEventListener('change', function (e) {
     currentMessageText = e.target.value;
 
@@ -171,6 +185,18 @@ btnSendMessage.addEventListener('click', function () {
 
 socket.on('new:message', msg => {
     renderMessages([msg]);
+})
+
+socket.on('user:typing', (typingUser) => {
+    typingStatus.innerHTML = `${typingUser.name} ${typingUser.nickname} is typing...`;
+})
+
+socket.on('user:stopped:typing', (userStoppedTyping) => {
+    typingStatus.innerHTML = '';
+});
+
+socket.on('user:change:status', user => {
+    updateUserStatus(user);
 })
 
 

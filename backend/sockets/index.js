@@ -4,17 +4,39 @@ module.exports.up = function (io) {
     io.on('connection', socket => {
         console.log('socket connected');
 
+        let currentUser = {};
+
         socket.on('login', user => {
             serviceUser.getUserByNickname(user.nickname)
                 .then(data => {
                     if (data.length) {
+                        currentUser = data[0];
                         socket.emit('login:success', data[0]);
-                        io.emit('user:entered', data[0])
+                        io.emit('user:entered', data[0]);
+                        serviceUser.updateUserInfo(data[0]._id, {'status':'just_appeared'})
+                        .then (user => {
+                            io.emit('user:change:status', user);
+                            setTimeout(() => {
+                                serviceUser.updateUserInfo(currentUser._id, {'status':'online'})
+                                .then(user => io.emit('user:change:status', user))   
+                            }, 60*1000)
+                        })
+                    
                     } else {
                         serviceUser.createNewUser(user)
                             .then(user => {
+                                currentUser = user;
                                 socket.emit('login:success', user)
                                 io.emit('user:entered', user)
+                                serviceUser.updateUserInfo(user._id, {'status':'just_appeared'})
+                                .then (user => {
+                                    io.emit('user:change:status', user);
+                                    setTimeout(() => {
+                                        serviceUser.updateUserInfo(currentUser._id, {'status':'online'})
+                                        .then(user => io.emit('user:change:status', user))   
+                                    }, 60*1000)
+                                })
+                                
                             });
 
                     }
@@ -46,6 +68,25 @@ module.exports.up = function (io) {
                 
         });
 
+        socket.on('user:typing', (typingUser) => {
+            io.emit('user:typing', typingUser);
+        })
 
+        socket.on('user:stopped:typing', (userStoppedTyping) => {
+            io.emit('user:stopped:typing', userStoppedTyping);
+        });
+
+        socket.on('disconnect', socket => {
+            if(currentUser._id) {
+                serviceUser.updateUserInfo(currentUser._id, {'status':'just_left'})
+                .then (user => {
+                    io.emit('user:change:status', user);
+                    setTimeout(() => {
+                        serviceUser.updateUserInfo(currentUser._id, {'status':'offline'})
+                        .then(user => io.emit('user:change:status', user))   
+                    }, 60*1000)
+                })
+            }
+        })
     })
 };
