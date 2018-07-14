@@ -64,7 +64,7 @@ function renderUserList() {
             userList.innerHTML = '';
             data.forEach(element => {
                 registeredUsers.push(element);
-                userList.innerHTML += element.nickname !== "@general" ? `<li> ${element.name} (<span class = "nickname">${element.nickname}<span>) </li>` : '';
+                userList.innerHTML += `<li> ${element.name} (<span class = "nickname">${element.nickname}<span>) </li>`;
             });
         })
 };

@@ -105,7 +105,7 @@ body {
 #main {
     padding: 20px;
     grid-area: mn;
-    overflow-y: scroll;
+    overflow-y: auto;
     background-color: #fff;
     border:1px solid white;
     box-shadow: 0px 0px 5px rgb(175, 175, 175);
@@ -145,6 +145,7 @@ body {
     border:1px solid white;
     box-shadow: 0px 0px 5px rgb(175, 175, 175);
     font-weight: bold;
+    overflow-y: auto;
 }
 
 #user-list > li {

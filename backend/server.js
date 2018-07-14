@@ -10,10 +10,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Origin", "http://localhost:3000")
+    res.header("Access-Control-Allow-Credentials", true)
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, OPTIONS")
     next();
   });
+
 
 app.use("/chat", routes);
 
@@ -22,6 +25,8 @@ app.use((req, res, next) => {
     res.sendStatus(404);
 })
 
-app.listen(9000, () => {
+const server = app.listen(9000, () => {
     console.log ("Server started on localhost:9000")
 });
+const io = require('socket.io').listen(server);
+require('./sockets').up(io);
