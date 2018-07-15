@@ -3,6 +3,7 @@ const serviceMessage = require('../services/messages');
 module.exports.up = function (io) {
     io.on('connection', socket => {
         console.log('socket connected');
+        socket.emit('connection:success', {});
 
         let currentUser = {};
 
@@ -17,8 +18,9 @@ module.exports.up = function (io) {
                         .then (user => {
                             io.emit('user:change:status', user);
                             setTimeout(() => {
-                                serviceUser.updateUserInfo(currentUser._id, {'status':'online'})
-                                .then(user => io.emit('user:change:status', user))   
+                                if (user.status === "just_appeared") {serviceUser.updateUserInfo(user._id, {'status':'online'})
+                                        .then(user => io.emit('user:change:status', user))  
+                                    } else return;   
                             }, 60*1000)
                         })
                     
@@ -32,8 +34,9 @@ module.exports.up = function (io) {
                                 .then (user => {
                                     io.emit('user:change:status', user);
                                     setTimeout(() => {
-                                        serviceUser.updateUserInfo(currentUser._id, {'status':'online'})
-                                        .then(user => io.emit('user:change:status', user))   
+                                        if (user.status === "just_appeared") {serviceUser.updateUserInfo(user._id, {'status':'online'})
+                                        .then(user => io.emit('user:change:status', user))  
+                                    } else return; 
                                     }, 60*1000)
                                 })
                                 
@@ -80,10 +83,14 @@ module.exports.up = function (io) {
             if(currentUser._id) {
                 serviceUser.updateUserInfo(currentUser._id, {'status':'just_left'})
                 .then (user => {
+                    io.emit('user:stopped:typing', user);
+                    io.emit('user:left', user);
                     io.emit('user:change:status', user);
                     setTimeout(() => {
-                        serviceUser.updateUserInfo(currentUser._id, {'status':'offline'})
-                        .then(user => io.emit('user:change:status', user))   
+                        if (user.status === 'just_left') {
+                        serviceUser.updateUserInfo(user._id, {'status':'offline'})
+                            .then(user => io.emit('user:change:status', user)) 
+                        } else return;  
                     }, 60*1000)
                 })
             }

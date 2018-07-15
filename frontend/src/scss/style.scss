@@ -40,7 +40,7 @@ body {
     display: grid;
     grid-column-gap: 10px;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(4, 1fr) 0.5fr 0.5fr;
+    grid-template-rows: repeat(4, 1fr) 0.3fr 0.7fr;
     grid-template-areas: "cn cn cn un"
                          "mn mn mn as"
                          "mn mn mn as"
@@ -115,7 +115,7 @@ body {
 
 #typing-status {
     grid-area: ts;
-    align-self: center;
+    align-self: end;
     padding-left: 20px;
     height: 15px;
     font-style: italic;
@@ -175,6 +175,7 @@ body {
     padding: 5px;
     border-radius: 5px;
     margin-bottom: 10px;
+    font-size: 14px;
 }
 
 .nickname {
