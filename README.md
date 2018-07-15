@@ -16,10 +16,8 @@
  
  #### To switch between http and sockets please switch script files in `frontend/src/pug/index.pug`:
    Sockets file:
-``` script(src='js/socket.js')
-```
+``` script(src='js/socket.js')```
 
    HTTP file:
-```script(src='js/http.js')
-```
+```script(src='js/http.js')```
  
