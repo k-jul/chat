@@ -15,7 +15,8 @@ let registeredUsers = [];
 let lastMsgDate;
 let currentUser = {};
 let currentUserName = '';
-let currentUserNickname;
+let currentUserNickname
+;
 let currentMessage = {};
 let currentMessageText = '';
 
