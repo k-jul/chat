@@ -7,6 +7,9 @@
  * ```cd ../backend```
  * ```npm install```
  
+ #### Import database:
+ * ```mongorestore ./dump/chat --db chat```
+ 
  #### To run the project:
  * backend folder: ```npm start```
  * fontend folder: ```gulp```
