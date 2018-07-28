@@ -58,15 +58,17 @@ module.exports.up = function (io) {
         })
 
         socket.on('new:message', ([user, message]) => {
-            serviceMessage.createMessage(message)
-             .then(({_id, body, sendingTime}) => {
+
+            serviceMessage.newMessage(message)
+             .then(([userMsg, botReply]) => {
                  const message = {
-                     _id,
-                     body,
-                     sendingTime,
+                     _id: userMsg._id || '1',
+                     body: userMsg.body,
+                     sendingTime: userMsg.sendingTime,
                      sender: user
                  };
                  io.emit('new:message', message);
+                 if (botReply) io.emit('new:message', botReply);
              })
                 
         });

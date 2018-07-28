@@ -1,6 +1,7 @@
 class Repository {
     constructor() {
         this.model = null;
+        this.create = this.create.bind(this);
     }
 
     getAll() {
