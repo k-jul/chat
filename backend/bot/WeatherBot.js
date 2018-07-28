@@ -16,7 +16,7 @@ class WeatherBot {
             R.split(' in '),
             R.nth(1),
             R.split('weather '),
-            R.replace('?', '')
+            R.replace(/?/, '')
         )(initialMsgBody);                      
     }
 
