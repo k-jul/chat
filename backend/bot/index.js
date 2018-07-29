@@ -1,5 +1,6 @@
 const R = require('ramda');
 
+const {USER_BOT} = require('./config');
 const WeatherBot = require('./WeatherBot');
 const MoneyExchangeBot = require('./MoneyExchangeBot');
 const AdviceBot = require('./AdviceBot');
@@ -7,7 +8,7 @@ const QuoteBot = require('./QuoteBot');
 const NoteBot = require('./NoteBot');
 
 
-class BotFabric {
+class BotFabric { 
     static makeBot(data) {
         switch (true) {
             case R.test(/weather/, data.body.toLowerCase()):
@@ -29,14 +30,19 @@ class BotFabric {
                 return new QuoteBot();
 
             default:
-                console.log('yuuhu!');
+                return;
         }
     }
 }
 
 async function initBot(initialMsg) {
     const Bot = BotFabric.makeBot(initialMsg);
-    return Promise.resolve([initialMsg, await Bot.generateReply()])
+    return Bot ? Promise.resolve([initialMsg, await Bot.generateReply()])
+               : Promise.resolve([initialMsg, {
+            body: "<b>Sorry, I don't understand you:( Try to explain again...</b>",
+            sendingTime: new Date(),
+            sender: USER_BOT
+    }])
 }
 
 module.exports = {
