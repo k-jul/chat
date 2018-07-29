@@ -1,4 +1,4 @@
-# Chat
+# Chat-bot
 
 #### To install the project:
  * ```git clone https://github.com/k-jul/chat.git```
@@ -17,11 +17,4 @@
  
  > _IMPORTANT!:_
  > If you need to open second window for testing chat - run ```gulp``` in separate terminal!
- 
- #### To switch between http and sockets please switch script files in `frontend/src/pug/index.pug`:
-   Sockets file:
-``` script(src='js/socket.js')```
-
-   HTTP file:
-```script(src='js/http.js')```
  
