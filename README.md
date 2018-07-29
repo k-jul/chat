@@ -2,6 +2,7 @@
 
 #### To install the project:
  * ```git clone https://github.com/k-jul/chat.git```
+ * ```git checkout chat-bot```
  * ```cd  frontend```
  * ```npm install```
  * ```cd ../backend```
